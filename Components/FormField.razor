@@ -1,0 +1,16 @@
+﻿@typeparam TEntity
+
+@using System.Reflection 
+
+<div class="form-group">
+    <label>@Property?.GetDisplayName()</label>
+    <GenericField Property="Property" Entity="Entity"/>
+</div>
+
+@code {
+    [Parameter]
+    public TEntity? Entity { get; set; }
+
+    [Parameter]
+    public PropertyInfo? Property { get; set; }
+}

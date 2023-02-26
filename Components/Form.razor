@@ -1,0 +1,41 @@
+﻿@typeparam TEntity
+
+@using System.Reflection
+@using System.ComponentModel
+
+<EditForm Model="Entity" OnSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    @foreach (var property in Properties)
+    {
+        <FormField Property="property" Entity="Entity" />
+    }
+    <div class="row">
+        <div class="col-sm-12 d-flex justify-content-end">
+            <button class="btn btn-lg btn-primary" type="submit">
+                <i class="fa fa-save" /> Save
+            </button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public TEntity? Entity { get; set; }
+
+    [Parameter]
+    public EventCallback OnSaved { get; set; }
+
+    private List<PropertyInfo> Properties { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        Properties = typeof(TEntity).GetProperties()
+            .Where(p => Attribute.IsDefined(p, typeof(DisplayNameAttribute)))
+            .ToList();
+    }
+
+    private async Task OnSubmit()
+    {
+        // notify parent component
+    }
+}

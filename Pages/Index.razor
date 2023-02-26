@@ -1,0 +1,26 @@
+﻿@page "/"
+
+@using BlazorReflection.Components
+@using BlazorReflection.Data
+
+<PageTitle>Index</PageTitle>
+
+<Form Entity="Product" />
+
+@code {
+    private Product? Product { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Product = new Product()
+            {
+                Name = "Apple",
+                Description = "Green or red",
+                Type = ProductType.Standard,
+                Price = 2.5m,
+                HasSubscription = false
+            };
+    }
+}
